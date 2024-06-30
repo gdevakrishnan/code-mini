@@ -7,7 +7,7 @@ function Signup() {
     <Fragment>
       <section className="page form_page">
         <form>
-          <button className="btn">
+          <button className="btn google_btn">
             <FcGoogle className='google'/> Continue With Google
           </button>
           <div className="divider">
