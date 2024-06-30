@@ -14,7 +14,7 @@ function Navbar() {
         <Fragment>
             <header className="navbar">
                 <nav>
-                    <Link to='/' className='logo'>Code-Mini</Link>
+                    <Link to='/' className='logo'>Codemini</Link>
                     <input type="checkbox" id="check" checked={menuBtn} onChange={toggleMenu} />
                     <label htmlFor='check' className="checkbtn">
                         {
