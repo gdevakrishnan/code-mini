@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Router from './routers/Router'
 
 function App() {
   return (
-    <div>App</div>
+    <Fragment>
+      <Router />
+    </Fragment>
   )
 }
 

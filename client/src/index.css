@@ -1,9 +1,10 @@
 :root {
-  --text: #e7e6f9;
-  --background: #03030b;
-  --primary: #8c88e3;
-  --secondary: #7e1e67;
-  --accent: #d34681;
+  --text: #e6dffb;
+  --background: #08041d;
+  --background-pair: #0F0A28;
+  --primary: #967cee;
+  --secondary: #6a149a;
+  --accent: #c525e3;
 }
 
 * {
@@ -19,8 +20,265 @@ body {
   height: 100vh;
   overflow-x: hidden;
   background-color: var(--background);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h1, p, a {
+.page {
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
+  padding: 2rem 0rem;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.4rem;
+  outline: none;
+  border: none;
+  padding: 12px 0px;
+  font-size: 1.1rem;
+  color: var(--primary);
+  background-color: var(--background-pair);
+  box-shadow: inset 2px 2px 5px 1px var(--primary), inset -2px -2px 5px 1px var(--primary);
+  transition: all 0.4s ease-in;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  margin-top: 14px;
+  margin-bottom: 10px;
+}
+
+.btn:hover {
+  border: none;
   color: var(--text);
+  background-color: var(--primary);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+h1,
+p,
+a {
+  color: var(--text);
+}
+
+/* Navbar */
+.navbar nav {
+  display: flex;
+  background-color: var(--background);
+  padding: 10px 0;
+  height: 60px;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+}
+
+.navbar nav .logo {
+  font-size: 1.6rem;
+  width: auto;
+  color: var(--primary);
+  margin: 0 20px;
+}
+
+.navbar nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.navbar nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar nav ul li:last-child {
+  margin-right: 0;
+}
+
+.navbar nav ul li a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 6px 15px;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1.1px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.navbar nav ul li:hover a {
+  background-color: var(--primary);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+}
+
+.navbar .checkbtn {
+  font-size: 2rem;
+  color: var(--primary);
+  float: right;
+  cursor: pointer;
+  display: none;
+  height: 60px;
+  line-height: 60px;
+  padding: 0px 10px;
+}
+
+.navbar #check {
+  display: none;
+}
+
+@media screen and (max-width: 972px) {
+  .navbar nav ul {
+    position: fixed;
+    height: auto;
+    width: 35%;
+    margin: 0;
+    top: 70px;
+    right: -40%;
+    text-align: center;
+    background-color: var(--primary);
+    transition: all 0.6s ease-out;
+    z-index: 1000;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+  }
+
+  .navbar nav ul li {
+    display: block;
+    line-height: 3rem;
+    width: 100%;
+  }
+
+  .navbar nav ul li a {
+    font-size: 1rem;
+  }
+
+  .navbar nav ul li:hover a {
+    color: var(--background);
+    box-shadow: none;
+  }
+
+  .navbar nav ul li:hover a {
+    background-color: transparent;
+  }
+
+  .navbar .checkbtn {
+    display: inline-block;
+  }
+
+  .navbar #check:checked~ul {
+    right: 20px;
+  }
+
+  .navbar .checkbtn .menu_btn {
+    font-size: 1.6rem;
+    line-height: 60px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .navbar nav ul {
+    width: 70%;
+    right: -70%;
+  }
+}
+
+/* Form Page */
+.form_page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.form_page form {
+  background-color: var(--background-pair);
+  padding: 30px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+
+.form_page form .divider {
+  position: relative;
+  width: 100%;
+  height: 0.2rem;
+  background-color: var(--background);
+  margin: 10px 0px;
+}
+
+.form_page form .divider .or {
+  position: absolute;
+  left: 44%;
+  top: -0.6rem;
+  font-size: 1rem;
+  color: var(--primary);
+  background-color: var(--background-pair);
+  padding: 0px 10px;
+}
+
+.form_page form .form_group {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 10px;
+}
+
+.form_page form .form_group label {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.form_page form .form_group input {
+  outline: none;
+  border: none;
+  background-color: var(--background);
+  padding: 10px 16px;
+  border-radius: 5px;
+  color: var(--text);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.form_page form .form_group input:focus {
+  border: 2px solid var(--primary);
+}
+
+.google_btn {
+  padding: 10px 0px;
+  color: var(--text);
+  background-color: var(--primary);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.google_btn:hover {
+  color: var(--primary);
+  background-color: var(--background-pair);
+  box-shadow: inset 2px 2px 5px 1px var(--primary), inset -2px -2px 5px 1px var(--primary);
+}
+
+.btn .google {
+  font-size: 2rem;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.form_page form .message {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.form_page form .message a {
+  color: var(--primary);
+  font-weight: 600;
+  transition: all 0.4 ease-in;
+}
+
+.form_page form .message a:hover {
+  border-bottom: 1px solid var(--primary);
 }
