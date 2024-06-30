@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import Features from '../components/Features'
 
 function Dashboard() {
   return (
@@ -9,6 +10,7 @@ function Dashboard() {
         <p className="hero_sub_title">Build with Google Gemini to make <span>helpful for everyone</span></p>
         <button className="btn">Get Started</button>
       </section>
+      <Features />
     </Fragment>
   )
 }
