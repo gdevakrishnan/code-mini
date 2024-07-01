@@ -1,13 +1,31 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 
 function Signup() {
+  const initialState = {
+    "uname": "",
+    "gmail": "",
+    "pwd": "",
+    "cpwd": ""
+  }
+  const [formDetails, setFormDetails] = useState(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formDetails);
+  }
+
+  const handleGoogle = (e) => {
+    e.preventDefault();
+    console.log("Hello Google");
+  }
+
   return (
     <Fragment>
       <section className="page form_page">
-        <form>
-          <button className="btn google_btn">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <button className="btn google_btn" onClick={(e) => handleGoogle(e)}>
             <FcGoogle className='google' /> Continue With Google
           </button>
 
@@ -21,6 +39,8 @@ function Signup() {
               type="text"
               name="uname"
               id="uname"
+              value = {formDetails.uname}
+              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
             />
           </div>
           <div className="form_group">
@@ -29,6 +49,8 @@ function Signup() {
               type="email"
               name="gmail"
               id="gmail"
+              value = {formDetails.gmail}
+              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
             />
           </div>
           <div className="form_group">
@@ -37,6 +59,8 @@ function Signup() {
               type="password"
               name="pwd"
               id="pwd"
+              value = {formDetails.pwd}
+              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
             />
           </div>
           <div className="form_group">
@@ -45,12 +69,15 @@ function Signup() {
               type="password"
               name="cpwd"
               id="cpwd"
+              value = {formDetails.cpwd}
+              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
             />
           </div>
           <input
             type="submit"
             value="Register"
             className="btn"
+            onClick={(e) => handleSubmit(e)}
           />
           <p className="message">Already have an accout? <Link to={'/signin'}>Signin</Link></p>
         </form>
