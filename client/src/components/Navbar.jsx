@@ -32,6 +32,9 @@ function Navbar() {
                         <li title='signin'>
                             <Link to={'/signin'}>Signin</Link>
                         </li>
+                        <li>
+                            <Link to={'/code-review'}>Code Review</Link>
+                        </li>
                     </ul>
                 </nav>
             </header>

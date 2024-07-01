@@ -401,3 +401,17 @@ a {
 .features_component .cards .card .card_description {
   line-height: 2rem;
 }
+
+/* Code review */
+.code_review_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.code_editor {
+  padding: 5px;
+  line-height: 1.6rem;
+  border-radius: 10px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
