@@ -2,7 +2,7 @@ import React from 'react'
 
 function ProjectInitialization() {
   return (
-    <div>ProjectInitialization</div>
+    <h1>ProjectInitialization</h1>
   )
 }
 

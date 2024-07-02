@@ -2,7 +2,7 @@ import React from 'react'
 
 function CodeDebug() {
   return (
-    <div>CodeDebug</div>
+    <h1>CodeDebug</h1>
   )
 }
 

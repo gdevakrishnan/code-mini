@@ -2,7 +2,7 @@ import React from 'react'
 
 function CodeComments() {
   return (
-    <div>CodeComments</div>
+    <h1>CodeComments</h1>
   )
 }
 

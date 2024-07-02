@@ -2,7 +2,7 @@ import React from 'react'
 
 function DailySinppet() {
   return (
-    <div>DailySinppet</div>
+    <h1>DailySinppet</h1>
   )
 }
 
