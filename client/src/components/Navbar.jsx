@@ -33,7 +33,7 @@ function Navbar() {
                             <Link to={'/signin'}>Signin</Link>
                         </li>
                         <li>
-                            <Link to={'/code-review'}>Code Review</Link>
+                            <Link to={'/code'}>Code</Link>
                         </li>
                     </ul>
                 </nav>

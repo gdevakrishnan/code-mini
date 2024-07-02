@@ -4,19 +4,19 @@ function Features() {
     const featuresDb = [
         {
             "title": "Get Code Review",
-            "description": "Improve code with expert feedback."
+            "description": "Improve code with expert feedback"
         },
         {
             "title": "Debug the Error",
-            "description": "Fix bugs swiftly with guidance."
+            "description": "Fix bugs swiftly with guidance"
         },
         {
             "title": "Daily Snippets",
-            "description": "Daily tips for effective coding."
+            "description": "Daily tips for effective coding"
         },
         {
             "title": "Project Initialization",
-            "description": "Start projects quickly with setup guides."
+            "description": "Start projects quickly with setup guides"
         }
     ];
 
