@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
+import validator from 'validator';
 
 function Signup() {
   const initialState = {
@@ -11,24 +12,59 @@ function Signup() {
     "pwd": "",
     "cpwd": ""
   }
-  
+
   const [formDetails, setFormDetails] = useState(initialState);
   const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formDetails);
+    for (const key in formDetails) {
+      if (formDetails[key] === "") {
+        alert(`Enter all the fields`);
+        return;
+      }
+    }
+
+    if (!(validator.isEmail(formDetails["gmail"].trim()))) {
+      setMsg("Invalid Email");
+      return;
+    }
+
+    if (formDetails["pwd"].length < 6) {
+      alert("Enter minimum 6 charachters password");
+      return;
+    }
+
+    if (formDetails["pwd"] !== formDetails["cpwd"]) {
+      alert('Password mismatch');
+      return;
+    }
+
+    const {
+      uname,
+      gmail,
+      pwd
+    } = formDetails;
+
+    const userCredential = await createUserWithEmailAndPassword(auth, gmail, pwd);
+    const userDetails = userCredential.user;
+    await updateProfile(auth.currentUser, {
+      displayName: uname
+    });
+    setFormDetails(initialState);
+    alert("User registered successfully");
   }
 
+  // Continue with google
   const handleGoogle = async (e) => {
     try {
       e.preventDefault();
       const googleAuthProvider = new GoogleAuthProvider();
       await signInWithPopup(auth, googleAuthProvider)
         .then(async (response) => {
-          const user = response.user; // User details from google auth
+          const { user } = response; // User details from google auth
           const token = await user.getIdToken();  // Get the id token of the user
-          setUser({...user, token});
+          setUser({ ...user, token });
         })
         .catch(e => {
           console.log(e.message);

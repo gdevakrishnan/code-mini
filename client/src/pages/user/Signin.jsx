@@ -19,6 +19,7 @@ function Signin() {
     console.log(formDetails);
   }
 
+  // Continue with google
   const handleGoogle = async (e) => {
     try {
       e.preventDefault();
