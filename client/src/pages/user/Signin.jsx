@@ -1,8 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function Signin() {
+  const [user, setUser] = useState(null);
   const initialState = {
     "uname": "",
     "gmail": "",
@@ -15,10 +18,24 @@ function Signin() {
     console.log(formDetails);
   }
 
-  const handleGoogle = (e) => {
-    e.preventDefault();
-    console.log("Hello Google");
+  const handleGoogle = async (e) => {
+    try {
+      e.preventDefault();
+      const googleAuthProvider = new GoogleAuthProvider();
+      await signInWithPopup(auth, googleAuthProvider)
+        .then((response) => {
+          const token = response.user.accessToken;  // Google access token of an user
+          const user = response.user; // User details from google auth
+          setUser({...user, token})
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   }
+
   return (
     <Fragment>
       <section className="page form_page">

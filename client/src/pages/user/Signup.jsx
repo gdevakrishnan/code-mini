@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function Signup() {
   const initialState = {
@@ -10,15 +12,29 @@ function Signup() {
     "cpwd": ""
   }
   const [formDetails, setFormDetails] = useState(initialState);
+  const [user, setUser] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formDetails);
   }
 
-  const handleGoogle = (e) => {
-    e.preventDefault();
-    console.log("Hello Google");
+  const handleGoogle = async (e) => {
+    try {
+      e.preventDefault();
+      const googleAuthProvider = new GoogleAuthProvider();
+      await signInWithPopup(auth, googleAuthProvider)
+        .then((response) => {
+          const token = response.user.accessToken;  // Google access token of an user
+          const user = response.user; // User details from google auth
+          setUser({...user, token})
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -39,8 +55,8 @@ function Signup() {
               type="text"
               name="uname"
               id="uname"
-              value = {formDetails.uname}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              value={formDetails.uname}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <div className="form_group">
@@ -49,8 +65,8 @@ function Signup() {
               type="email"
               name="gmail"
               id="gmail"
-              value = {formDetails.gmail}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              value={formDetails.gmail}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <div className="form_group">
@@ -59,8 +75,8 @@ function Signup() {
               type="password"
               name="pwd"
               id="pwd"
-              value = {formDetails.pwd}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              value={formDetails.pwd}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <div className="form_group">
@@ -69,8 +85,8 @@ function Signup() {
               type="password"
               name="cpwd"
               id="cpwd"
-              value = {formDetails.cpwd}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              value={formDetails.cpwd}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <input
