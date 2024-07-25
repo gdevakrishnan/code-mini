@@ -11,6 +11,7 @@ function Signup() {
     "pwd": "",
     "cpwd": ""
   }
+  
   const [formDetails, setFormDetails] = useState(initialState);
   const [user, setUser] = useState(null);
 
@@ -24,10 +25,10 @@ function Signup() {
       e.preventDefault();
       const googleAuthProvider = new GoogleAuthProvider();
       await signInWithPopup(auth, googleAuthProvider)
-        .then((response) => {
-          const token = response.user.accessToken;  // Google access token of an user
+        .then(async (response) => {
           const user = response.user; // User details from google auth
-          setUser({...user, token})
+          const token = await user.getIdToken();  // Get the id token of the user
+          setUser({...user, token});
         })
         .catch(e => {
           console.log(e.message);

@@ -5,13 +5,14 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 function Signin() {
-  const [user, setUser] = useState(null);
   const initialState = {
     "uname": "",
     "gmail": "",
     "pwd": ""
   }
+
   const [formDetails, setFormDetails] = useState(initialState);
+  const [user, setUser] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,10 +24,11 @@ function Signin() {
       e.preventDefault();
       const googleAuthProvider = new GoogleAuthProvider();
       await signInWithPopup(auth, googleAuthProvider)
-        .then((response) => {
-          const token = response.user.accessToken;  // Google access token of an user
+        .then(async (response) => {
           const user = response.user; // User details from google auth
-          setUser({...user, token})
+          const token = await user.getIdToken();  // Get the id token of the user
+          setUser({...user, token});
+          localStorage.setItem("code-mini-auth", token);
         })
         .catch(e => {
           console.log(e.message);
