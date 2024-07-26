@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
+import validator from 'validator';
 
 function Signin() {
   const initialState = {
@@ -14,9 +15,42 @@ function Signin() {
   const [formDetails, setFormDetails] = useState(initialState);
   const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formDetails);
+    for (const key in formDetails) {
+      if (formDetails[key] === "") {
+        alert(`Enter all the fields`);
+        return;
+      }
+    }
+
+    if (!(validator.isEmail(formDetails["gmail"].trim()))) {
+      setMsg("Invalid Email");
+      return;
+    }
+
+    if (formDetails["pwd"].length < 6) {
+      alert("Enter minimum 6 charachters password");
+      return;
+    }
+
+    const {
+      gmail,
+      pwd
+    } = formDetails;
+
+    await signInWithEmailAndPassword(auth, gmail, pwd)
+      .then(async (response) => {
+        const userDetails = response.user;
+        const token = await userDetails.getIdToken();
+        setUser({ ...userDetails, token });
+        localStorage.setItem("code-mini-auth", token);
+        alert("User login successfull");
+        setFormDetails(initialState);
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
   }
 
   // Continue with google
@@ -28,8 +62,9 @@ function Signin() {
         .then(async (response) => {
           const user = response.user; // User details from google auth
           const token = await user.getIdToken();  // Get the id token of the user
-          setUser({...user, token});
+          setUser({ ...user, token });
           localStorage.setItem("code-mini-auth", token);
+          alert("User login successfull");
         })
         .catch(e => {
           console.log(e.message);
@@ -56,7 +91,7 @@ function Signin() {
               name="uname"
               id="uname"
               value={formDetails.uname}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <div className="form_group">
@@ -66,7 +101,7 @@ function Signin() {
               name="gmail"
               id="gmail"
               value={formDetails.gmail}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <div className="form_group">
@@ -76,7 +111,7 @@ function Signin() {
               name="pwd"
               id="pwd"
               value={formDetails.pwd}
-              onChange={(e) => setFormDetails({...formDetails, [e.target.id]: e.target.value})}
+              onChange={(e) => setFormDetails({ ...formDetails, [e.target.id]: e.target.value })}
             />
           </div>
           <input

@@ -46,13 +46,20 @@ function Signup() {
       pwd
     } = formDetails;
 
-    const userCredential = await createUserWithEmailAndPassword(auth, gmail, pwd);
-    const userDetails = userCredential.user;
-    await updateProfile(auth.currentUser, {
-      displayName: uname
+    await createUserWithEmailAndPassword(auth, gmail, pwd)
+    .then(async (response) => {
+      const userDetails = response.user;
+      const token = await userDetails.getIdToken();
+      await updateProfile(auth.currentUser, {
+        displayName: uname
+      });
+      setUser({...userDetails, token});
+      alert("User registered successfully");
+      setFormDetails(initialState);
+    })
+    .catch((e) => {
+      console.error(e.message);
     });
-    setFormDetails(initialState);
-    alert("User registered successfully");
   }
 
   // Continue with google
@@ -61,16 +68,17 @@ function Signup() {
       e.preventDefault();
       const googleAuthProvider = new GoogleAuthProvider();
       await signInWithPopup(auth, googleAuthProvider)
-        .then(async (response) => {
+      .then(async (response) => {
           const { user } = response; // User details from google auth
           const token = await user.getIdToken();  // Get the id token of the user
           setUser({ ...user, token });
+          alert("User registered successfully");
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e.message);
     }
   }
 
