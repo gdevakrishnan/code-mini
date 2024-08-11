@@ -550,4 +550,13 @@ a {
   color: var(--text);
 }
 
-/* Output Component */
+/* Page not found */
+.page_not_found {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page_not_found .page_not_found_img {
+  width: 300px;
+}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import Dashboard from '../pages/Dashboard'
 import Signup from '../pages/user/Signup'
@@ -11,8 +11,14 @@ import CodeComments from '../pages/code/CodeComments'
 import DailySnippet from '../pages/code/DailySinppet'
 import CodeReview from '../pages/code/CodeReview'
 import ProjectInitialization from '../pages/code/ProjectInitialization'
+import appContext from '../context/appContext'
+import PageNotFound from '../pages/PageNotFound'
 
 function Router() {
+    const {
+        user
+    } = useContext(appContext);
+
     return (
         <Fragment>
             <BrowserRouter>
@@ -27,6 +33,7 @@ function Router() {
                     <Route path='/code/daily-snippet' element={<DailySnippet />} />
                     <Route path='/code/code-review' element={<CodeReview />} />
                     <Route path='/code/project-initialization' element={<ProjectInitialization />} />
+                    <Route path='*' element={<PageNotFound />} />
                 </Routes>
                 <Outlet />
             </BrowserRouter>
