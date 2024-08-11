@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import AceEditor from "react-ace";
 import { FaDownload, FaCopy } from "react-icons/fa6";
 
@@ -18,6 +18,7 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
 import { getCodeReview, toCodeComment, toCodeDebug, toCodeExecute } from '../../services/serviceWorker';
+import appContext from '../../context/appContext';
 
 function CodeReview() {
   const languageDB = [
@@ -37,6 +38,10 @@ function CodeReview() {
   const [code, setCode] = useState('');
   const [review, setReview] = useState(null);
   const [output, setOutput] = useState(null);
+
+  const {
+    setMsg
+  } = useContext(appContext);
 
   function onChange(newValue) {
     setCode(newValue);
@@ -112,7 +117,7 @@ function CodeReview() {
     e.preventDefault();
     try {
       await navigator.clipboard.writeText(code);
-      alert('Code copied to clipboard!');
+      setMsg('Code copied to clipboard!');
     } catch (err) {
       console.error('Failed to copy: ', err);
     }
@@ -122,7 +127,7 @@ function CodeReview() {
     <Fragment>
       <div className="page code_review_page">
         <form className='form language_form'>
-          <select value={selectedLanguage} onChange={(e) => handleChangeLanguage(e)} className='select'>
+          <select value={selectedLanguage} onChange={(e) => handleChangeLanguage(e)} className='select' title='language'>
             <option value="">Select Language</option>
             <option value="java">Java</option>
             <option value="c_cpp">C/C++</option>

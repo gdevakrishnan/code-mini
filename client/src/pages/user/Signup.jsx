@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
 import validator from 'validator';
+import appContext from '../../context/appContext';
 
 function Signup() {
   const initialState = {
@@ -16,27 +17,32 @@ function Signup() {
   const [formDetails, setFormDetails] = useState(initialState);
   const [user, setUser] = useState(null);
 
+  const {
+    setMsg,
+    setErrorMsg
+  } = useContext(appContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     for (const key in formDetails) {
       if (formDetails[key] === "") {
-        alert(`Enter all the fields`);
+        setErrorMsg(`Enter all the fields`);
         return;
       }
     }
 
     if (!(validator.isEmail(formDetails["gmail"].trim()))) {
-      setMsg("Invalid Email");
+      setErrorMsg("Invalid Email");
       return;
     }
 
     if (formDetails["pwd"].length < 6) {
-      alert("Enter minimum 6 charachters password");
+      setErrorMsg("Enter minimum 6 charachters password");
       return;
     }
 
     if (formDetails["pwd"] !== formDetails["cpwd"]) {
-      alert('Password mismatch');
+      setErrorMsg('Password mismatch');
       return;
     }
 
@@ -54,7 +60,7 @@ function Signup() {
         displayName: uname
       });
       setUser({...userDetails, token});
-      alert("User registered successfully");
+      setMsg("User registered successfully");
       setFormDetails(initialState);
     })
     .catch((e) => {
@@ -72,7 +78,7 @@ function Signup() {
           const { user } = response; // User details from google auth
           const token = await user.getIdToken();  // Get the id token of the user
           setUser({ ...user, token });
-          alert("User registered successfully");
+          setMsg("User registered successfully");
         })
         .catch(e => {
           console.error(e.message);

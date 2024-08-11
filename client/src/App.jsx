@@ -2,18 +2,24 @@ import React, { Fragment, useEffect, useState } from 'react'
 import Router from './routers/Router'
 import appContext from './context/appContext'
 import { verifyUserAndGetUser } from './services/serviceWorker';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [msg, setMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const context = {
     user,
-    setUser
+    setUser,
+    setMsg,
+    setErrorMsg
   };
 
   const getUserDetails = async () => {
     const token = localStorage.getItem('code-mini-auth');
-    
+
     if (token) {
       verifyUserAndGetUser(token)
         .then((response) => {
@@ -33,12 +39,27 @@ function App() {
     getUserDetails();
   }, [user, setUser])
 
+  useEffect(() => {
+    msg && (
+      toast.success(msg, { autoClose: 4000 })
+    )
+    setMsg(null)
+  }, [msg]);
+
+  useEffect(() => {
+    errorMsg && (
+      toast.error(errorMsg, { autoClose: 4000 })
+    )
+    setErrorMsg(null)
+  }, [errorMsg]);
+
   return (
-    <appContext.Provider value={context}>
-      <Fragment>
+    <Fragment>
+      <ToastContainer />
+      <appContext.Provider value={context}>
         <Router />
-      </Fragment>
-    </appContext.Provider>
+      </appContext.Provider>
+    </Fragment>
   )
 }
 

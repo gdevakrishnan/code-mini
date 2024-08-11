@@ -17,26 +17,27 @@ function Signin() {
   const nav = useNavigate();
 
   const {
-    user,
-    setUser
+    setUser,
+    setMsg,
+    setErrorMsg
   } = useContext(appContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     for (const key in formDetails) {
       if (formDetails[key] === "") {
-        alert(`Enter all the fields`);
+        setErrorMsg(`Enter all the fields`);
         return;
       }
     }
 
     if (!(validator.isEmail(formDetails["gmail"].trim()))) {
-      setMsg("Invalid Email");
+      setErrorMsg("Invalid Email");
       return;
     }
 
     if (formDetails["pwd"].length < 6) {
-      alert("Enter minimum 6 charachters password");
+      setErrorMsg("Enter minimum 6 charachters password");
       return;
     }
 
@@ -51,7 +52,7 @@ function Signin() {
         const token = await userDetails.getIdToken();
         setUser({ ...userDetails, token });
         localStorage.setItem("code-mini-auth", token);
-        alert("User login successfull");
+        setMsg("User login successfull");
         nav('/');
         setFormDetails(initialState);
       })
@@ -71,7 +72,7 @@ function Signin() {
           const token = await user.getIdToken();  // Get the id token of the user
           setUser({ ...user, token });
           localStorage.setItem("code-mini-auth", token);
-          alert("User login successfull");
+          setMsg("User login successfull");
           nav('/');
           setFormDetails(initialState);
         })
