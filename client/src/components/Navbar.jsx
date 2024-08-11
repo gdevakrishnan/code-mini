@@ -1,13 +1,27 @@
-import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { GrClose } from "react-icons/gr";
 import { FaBarsStaggered } from "react-icons/fa6";
+import appContext from '../context/appContext';
 
 function Navbar() {
-    const [menuBtn, setMenuBtn] = useState(false); // State for menu button toggle
+    const {
+        user,
+        setUser
+    } = useContext(appContext);
+
+    const [menuBtn, setMenuBtn] = useState(false);
+    const nav = useNavigate();
 
     const toggleMenu = () => {
         setMenuBtn(!menuBtn);
+    };
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        setUser(null);
+        localStorage.removeItem("code-mini-auth");
+        nav('/');
     };
 
     return (
@@ -26,15 +40,32 @@ function Navbar() {
                         <li title='Home'>
                             <Link to={'/'}>Home</Link>
                         </li>
-                        <li title='signup'>
-                            <Link to={'/signup'}>Signup</Link>
-                        </li>
-                        <li title='signin'>
-                            <Link to={'/signin'}>Signin</Link>
-                        </li>
-                        <li>
-                            <Link to={'/code'}>Code</Link>
-                        </li>
+                        {
+                            (user && user.uname && user.gmail) ? (
+                                <Fragment>
+                                    <li>
+                                        <Link to={'/code'}>Code</Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/'}>{user.uname}</Link>
+                                    </li>
+                                    <li>
+                                        <button onClick={(e) => {
+                                            handleLogout(e);
+                                        }}>Logout</button>
+                                    </li>
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+                                    <li title='signup'>
+                                        <Link to={'/signup'}>Signup</Link>
+                                    </li>
+                                    <li title='signin'>
+                                        <Link to={'/signin'}>Signin</Link>
+                                    </li>
+                                </Fragment>
+                            )
+                        }
                     </ul>
                 </nav>
             </header>

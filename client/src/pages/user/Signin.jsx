@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
 import validator from 'validator';
+import appContext from '../../context/appContext';
 
 function Signin() {
   const initialState = {
@@ -13,7 +14,11 @@ function Signin() {
   }
 
   const [formDetails, setFormDetails] = useState(initialState);
-  const [user, setUser] = useState(null);
+
+  const {
+    user,
+    setUser
+  } = useContext(appContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
