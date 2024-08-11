@@ -16,7 +16,7 @@ import "ace-builds/src-noconflict/mode-golang";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
-import { getCodeReview, toCodeComment, toCodeDebug } from '../../services/serviceWorker';
+import { getCodeReview, toCodeComment, toCodeDebug, toCodeExecute } from '../../services/serviceWorker';
 
 function CodeReview() {
   const languageDB = [
@@ -66,11 +66,13 @@ function CodeReview() {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [code, setCode] = useState('');
   const [review, setReview] = useState(null);
+  const [output, setOutput] = useState(null);
 
   function onChange(newValue) {
     setCode(newValue);
   }
 
+  // To handle the language switch
   const handleChangeLanguage = (e) => {
     e.preventDefault();
     const selected = languageDB.filter(aLanguage => aLanguage.language == e.target.value)
@@ -100,12 +102,22 @@ function CodeReview() {
       .catch((e) => console.log(e.message));
   }
 
+  // To comment the code
   const handleComment = async () => {
     toCodeComment(code)
       .then((response) => {
         if (response.data.startsWith('```') && response.data.endsWith('```')) {
           setCode(response.data.slice(3, -3).trim());
         }
+      })
+      .catch((e) => console.log(e.message));
+  }
+
+  // To execute the code
+  const handleExecute = async () => {
+    toCodeExecute(code)
+      .then((response) => {
+        setOutput(response.data)
       })
       .catch((e) => console.log(e.message));
   }
@@ -153,10 +165,19 @@ function CodeReview() {
         {
           (selectedLanguage && code) ? (
             <div className="buttons">
-              <button className='btn'>Execute</button>
+              <button className='btn' onClick={() => handleExecute()}>Execute</button>
               <button className='btn' onClick={() => handleDebug()}>GenAi</button>
               <button className='btn' onClick={() => handleReview()}>Review</button>
               <button className='btn' onClick={() => handleComment()}>Comment</button>
+            </div>
+          ) : null
+        }
+
+        {
+          (selectedLanguage && code && output) ? (
+            <div className="output">
+              <h1 className="title">Output</h1>
+              <div dangerouslySetInnerHTML={{ __html: output }} />
             </div>
           ) : null
         }

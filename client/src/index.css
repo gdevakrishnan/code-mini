@@ -69,7 +69,7 @@ body {
   .buttons {
     gap: 15px;
   }
-  
+
   .buttons .btn {
     margin: 0;
   }
@@ -379,7 +379,8 @@ a {
 }
 
 /* Feature Component */
-.features_component, .code_nav_page {
+.features_component,
+.code_nav_page {
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -488,7 +489,8 @@ a {
   margin-bottom: 20px;
 }
 
-.code_review_page .review {
+.code_review_page .review,
+.code_review_page .output {
   width: 90%;
   background-color: var(--background-pair);
   padding: 20px;
@@ -497,7 +499,8 @@ a {
 
 .code_review_page .review h1,
 .code_review_page .review h2,
-.code_review_page .review h3 {
+.code_review_page .review h3,
+.code_review_page .output h1 {
   color: var(--primary);
   margin: 10px 0px;
   font-weight: 400;
@@ -522,3 +525,5 @@ a {
 .code_review_page .review ul li h3 {
   color: var(--text);
 }
+
+/* Output Component */
