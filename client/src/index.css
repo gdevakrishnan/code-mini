@@ -560,3 +560,18 @@ a {
 .page_not_found .page_not_found_img {
   width: 300px;
 }
+
+/* Footer */
+footer {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+footer p {
+  line-height: 50px;
+  text-align: center;
+}

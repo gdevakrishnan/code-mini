@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar'
 import CodeReview from '../pages/code/CodeReview'
 import PageNotFound from '../pages/PageNotFound'
 import appContext from '../context/appContext'
+import Footer from '../components/Footer'
 
 function Router() {
     const {
@@ -24,6 +25,7 @@ function Router() {
                     <Route path='/code' element={(user && user.uname) ? <CodeReview /> : <PageNotFound />} />
                 </Routes>
                 <Outlet />
+                <Footer />
             </BrowserRouter>
         </Fragment>
     )
