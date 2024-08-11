@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
@@ -16,6 +16,7 @@ function Signup() {
 
   const [formDetails, setFormDetails] = useState(initialState);
   const [user, setUser] = useState(null);
+  const nav = useNavigate();
 
   const {
     setMsg,
@@ -61,13 +62,14 @@ function Signup() {
       });
       setUser({...userDetails, token});
       setMsg("User registered successfully");
+      nav('/signin');
       setFormDetails(initialState);
     })
     .catch((e) => {
       console.error(e.message);
     });
   }
-
+  
   // Continue with google
   const handleGoogle = async (e) => {
     try {
@@ -75,12 +77,13 @@ function Signup() {
       const googleAuthProvider = new GoogleAuthProvider();
       await signInWithPopup(auth, googleAuthProvider)
       .then(async (response) => {
-          const { user } = response; // User details from google auth
-          const token = await user.getIdToken();  // Get the id token of the user
-          setUser({ ...user, token });
-          setMsg("User registered successfully");
-        })
-        .catch(e => {
+        const { user } = response; // User details from google auth
+        const token = await user.getIdToken();  // Get the id token of the user
+        setUser({ ...user, token });
+        setMsg("User registered successfully");
+        nav('/signin');
+      })
+      .catch(e => {
           console.error(e.message);
         });
     } catch (e) {
