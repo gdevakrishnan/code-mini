@@ -41,3 +41,23 @@ export const getCodeReview = async (code) => {
         throw e;
     }
 }
+
+// To debug the code and make the code more efficient
+export const toCodeDebug = async (code) => {
+    try {
+        // const task = await Axios.get(`${BASE_URL}/code/code-review`, {code});
+        const task = await fetch(`${BASE_URL}/code/code-debug`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code })
+        });
+        const response = await task.json();
+        console.log(response);
+        return response
+    } catch (e) {
+        console.error('Error:', e.message);
+        throw e;
+    }
+}

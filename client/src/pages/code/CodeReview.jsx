@@ -16,7 +16,7 @@ import "ace-builds/src-noconflict/mode-golang";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
-import { getCodeReview } from '../../services/serviceWorker';
+import { getCodeReview, toCodeDebug } from '../../services/serviceWorker';
 
 function CodeReview() {
   const languageDB = [
@@ -80,9 +80,23 @@ function CodeReview() {
     selected.length == 0 && setCode(null);
   }
 
+  // To get review of the code
   const handleReview = async () => {
     getCodeReview(code)
-      .then((response) => setReview(response.data))
+      .then((response) => {
+        setReview(response.data)
+      })
+      .catch((e) => console.log(e.message));
+  }
+
+  // To debug and make the code more efficient
+  const handleDebug = async () => {
+    toCodeDebug(code)
+      .then((response) => {
+        if (response.data.startsWith('```') && response.data.endsWith('```')) {
+          setCode(response.data.slice(3, -3).trim());
+        }
+      })
       .catch((e) => console.log(e.message));
   }
 
@@ -130,7 +144,7 @@ function CodeReview() {
           (selectedLanguage && code) ? (
             <div className="buttons">
               <button onClick={() => handleReview()}>Review</button>
-              <button>Debug</button>
+              <button onClick={() => handleDebug()}>Debug</button>
               <button>Run</button>
             </div>
           ) : null

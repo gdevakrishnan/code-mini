@@ -4,6 +4,7 @@ require("dotenv").config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+// To get the review of the code
 const code_review = async (req, res) => {
     try {
         const { code } = req.body;
@@ -23,4 +24,24 @@ const code_review = async (req, res) => {
     }
 }
 
-module.exports = { code_review };
+// To debug and rewrite the code to make the code more efficient
+const code_debug = async (req, res) => {
+    try {
+        const { code } = req.body;
+        const prompt = `
+            ${code}\n\n
+            Debug and rewrite the above code, to make the code more efficient and optimized.
+            Only code. Do not give explanation of the code. 
+            Note: Do not mention the language.
+        `;
+
+        const result = await model.generateContent(prompt);
+        const response = result.response.text();
+        
+        res.status(200).json({ "data":  response});
+    }   catch (e) {
+        res.status(400).json({ "error": e.message });
+    }
+}
+
+module.exports = { code_review, code_debug };
