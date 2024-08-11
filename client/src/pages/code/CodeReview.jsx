@@ -126,7 +126,7 @@ function CodeReview() {
         <AceEditor
           mode={selectedLanguage}
           theme="tomorrow_night"
-          value={(code && selectedLanguage) ? code : "Type Here"}
+          value={(code && selectedLanguage) ? code : "Type Here\nNote:\n Enter the code here to get review and execute\nEnter the prompt here and get the code using GenAi"}
           placeholder='Type Here'
           onChange={onChange}
           name="UNIQUE_ID_OF_DIV"
@@ -143,9 +143,9 @@ function CodeReview() {
         {
           (selectedLanguage && code) ? (
             <div className="buttons">
-              <button onClick={() => handleReview()}>Review</button>
-              <button onClick={() => handleDebug()}>Debug</button>
               <button>Run</button>
+              <button onClick={() => handleDebug()}>GenAi</button>
+              <button onClick={() => handleReview()}>Review</button>
             </div>
           ) : null
         }
