@@ -4,19 +4,27 @@ function Features() {
     const featuresDb = [
         {
             "title": "Get Code Review",
-            "description": "Improve code with expert feedback"
+            "description": "Improve code with ai feedback"
         },
         {
             "title": "Debug the Error",
             "description": "Fix bugs swiftly with guidance"
         },
         {
-            "title": "Daily Snippets",
-            "description": "Daily tips for effective coding"
+            "title": "Generate Code",
+            "description": "Generate the code for your prompt"
         },
         {
-            "title": "Project Initialization",
-            "description": "Start projects quickly with setup guides"
+            "title": "Execution",
+            "description": "Execute the code using gemini ai"
+        },
+        {
+            "title": "Get Code",
+            "description": "Download the code with its extension"
+        },
+        {
+            "title": "Code Clipboard",
+            "description": "Copy the code to your clipboard"
         }
     ];
 

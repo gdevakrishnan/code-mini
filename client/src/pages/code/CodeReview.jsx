@@ -157,7 +157,7 @@ function CodeReview() {
         </form>
 
         {
-          (!selectedLanguage) ? <h3 className='select_language_msg'>* Select the language to type the code</h3> : null
+          (!selectedLanguage) ? <h3 className='select_language_msg'>* Select the language to type the code/prompt</h3> : null
         }
 
         <AceEditor
