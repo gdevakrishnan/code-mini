@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import AceEditor from "react-ace";
+import { FaDownload, FaCopy } from "react-icons/fa6";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-c_cpp";
@@ -92,7 +93,8 @@ function CodeReview() {
   }
 
   // To handle download the code with extension
-  const handleDownload = () => {
+  const handleDownload = (e) => {
+    e.preventDefault();
     const language = languageDB.find(lang => lang.language === selectedLanguage);
     if (!language) return;
 
@@ -105,6 +107,16 @@ function CodeReview() {
     URL.revokeObjectURL(url);
   };
 
+  // To copy the code to the clipboard
+  const handleCopy = async (e) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(code);
+      alert('Code copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  }
 
   return (
     <Fragment>
@@ -123,6 +135,20 @@ function CodeReview() {
             <option value="ruby">ruby</option>
             <option value="golang">golang</option>
           </select>
+          {
+            (selectedLanguage && code) ? (
+              <Fragment>
+                <div className="actions">
+                  <button className='actions_btn' onClick={(e) => handleDownload(e)}>
+                    <FaDownload className='fa' />
+                  </button>
+                  <button className='actions_btn' onClick={(e) => handleCopy(e)}>
+                    <FaCopy className='fa' />
+                  </button>
+                </div>
+              </Fragment>
+            ) : null
+          }
         </form>
 
         {
@@ -153,7 +179,6 @@ function CodeReview() {
               <button className='btn' onClick={() => handleDebug()}>GenAi</button>
               <button className='btn' onClick={() => handleReview()}>Review</button>
               <button className='btn' onClick={() => handleComment()}>Comment</button>
-              <button className='btn' onClick={() => handleDownload()}>Download</button>
             </div>
           ) : null
         }

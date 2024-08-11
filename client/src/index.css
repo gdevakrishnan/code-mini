@@ -462,6 +462,7 @@ a {
   justify-content: flex-end;
   width: 90%;
   padding: 0px 20px;
+  gap: 20px;
 }
 
 .code_review_page .language_form .select {
@@ -478,6 +479,29 @@ a {
 
 .code_review_page .language_form .select:focus {
   border: 2px solid var(--primary);
+}
+
+.code_review_page .language_form .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.code_review_page .language_form .actions .actions_btn {
+  width: 2rem;
+  background-color: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.code_review_page .language_form .actions .actions_btn .fa {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.code_review_page .language_form .actions .actions_btn:hover .fa {
+  color: var(--primary);
 }
 
 .code_review_page .select_language_msg {
