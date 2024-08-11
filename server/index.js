@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const userRouters = require('./routers/user/userRouters');
 const admin = require('firebase-admin');
+const userRouters = require('./routers/user/userRouters');
+const codeRouters = require('./routers/code/codeRouters');
 
 require('dotenv').config();
 const PORT = process.env.PORT || 5000;
@@ -31,3 +32,4 @@ app.listen(PORT, () => {
 });
 
 app.use("/code-mini/api", userRouters);
+app.use("/code-mini/api/code", codeRouters);

@@ -426,6 +426,7 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 2rem;
 }
 
 .code_editor {
@@ -466,4 +467,39 @@ a {
   width: 90%;
   padding: 0px 20px;
   margin-bottom: 20px;
+}
+
+.code_review_page .review {
+  width: 90%;
+  background-color: var(--background-pair);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.code_review_page .review h1,
+.code_review_page .review h2,
+.code_review_page .review h3 {
+  color: var(--primary);
+  margin: 10px 0px;
+  font-weight: 400;
+}
+
+.code_review_page .review p,
+.code_review_page .review a {
+  color: var(--text);
+  line-height: 20px;
+}
+
+.code_review_page .review ol li,
+.code_review_page .review ul li {
+  list-style-type: disc;
+  color: var(--text);
+  margin-left: 20px;
+  line-height: 20px;
+}
+
+.code_review_page .review ul li h1,
+.code_review_page .review ul li h2,
+.code_review_page .review ul li h3 {
+  color: var(--text);
 }

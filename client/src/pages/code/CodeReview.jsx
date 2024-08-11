@@ -16,6 +16,7 @@ import "ace-builds/src-noconflict/mode-golang";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
+import { getCodeReview } from '../../services/serviceWorker';
 
 function CodeReview() {
   const languageDB = [
@@ -64,6 +65,7 @@ function CodeReview() {
 
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [code, setCode] = useState('');
+  const [review, setReview] = useState(null);
 
   function onChange(newValue) {
     setCode(newValue);
@@ -76,6 +78,12 @@ function CodeReview() {
     selected.length && setCode(selected[0].code);
     selected.length == 0 && setSelectedLanguage(null);
     selected.length == 0 && setCode(null);
+  }
+
+  const handleReview = async () => {
+    getCodeReview(code)
+      .then((response) => setReview(response.data))
+      .catch((e) => console.log(e.message));
   }
 
   return (
@@ -117,6 +125,24 @@ function CodeReview() {
           enableLiveAutocompletion
           readOnly={(selectedLanguage) ? false : true}
         />
+
+        {
+          (selectedLanguage && code) ? (
+            <div className="buttons">
+              <button onClick={() => handleReview()}>Review</button>
+              <button>Debug</button>
+              <button>Run</button>
+            </div>
+          ) : null
+        }
+
+        {
+          (selectedLanguage && code && review) ? (
+            <div className="review">
+              <div dangerouslySetInnerHTML={{ __html: review }} />
+            </div>
+          ) : null
+        }
       </div>
     </Fragment>
   );
