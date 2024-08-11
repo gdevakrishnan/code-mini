@@ -44,4 +44,23 @@ const code_debug = async (req, res) => {
     }
 }
 
-module.exports = { code_review, code_debug };
+// To add comments to the code
+const code_comment = async (req, res) => {
+    try {
+        const { code } = req.body;
+        const prompt = `
+            ${code}\n\n
+            Debug and give comments to the code, to make the code more understandable
+            Note: Give only the code do not explain the code. Give minimum ammounts of comment.
+        `;
+
+        const result = await model.generateContent(prompt);
+        const response = result.response.text();
+        
+        res.status(200).json({ "data":  response});
+    }   catch (e) {
+        res.status(400).json({ "error": e.message });
+    }
+}
+
+module.exports = { code_review, code_debug, code_comment };

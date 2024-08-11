@@ -61,3 +61,22 @@ export const toCodeDebug = async (code) => {
         throw e;
     }
 }
+
+// To add the comment to the code
+export const toCodeComment = async (code) => {
+    try {
+        const task = await fetch(`${BASE_URL}/code/code-comment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code })
+        });
+        const response = await task.json();
+        console.log(response);
+        return response
+    } catch (e) {
+        console.error('Error:', e.message);
+        throw e;
+    }
+}
