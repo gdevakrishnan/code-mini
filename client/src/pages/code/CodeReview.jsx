@@ -20,48 +20,17 @@ import { getCodeReview, toCodeComment, toCodeDebug, toCodeExecute } from '../../
 
 function CodeReview() {
   const languageDB = [
-    {
-      "language": "java",
-      "code": "public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}"
-    },
-    {
-      "language": "c_cpp",
-      "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}"
-    },
-    {
-      "language": "javascript",
-      "code": "console.log('Hello, World!');"
-    },
-    {
-      "language": "python",
-      "code": "print('Hello, World!')"
-    },
-    {
-      "language": "typescript",
-      "code": "console.log('Hello, World!');"
-    },
-    {
-      "language": "dart",
-      "code": "void main() {\n  print('Hello, World!');\n}"
-    },
-    {
-      "language": "php",
-      "code": "<?php\n  echo 'Hello, World!';\n?>"
-    },
-    {
-      "language": "rust",
-      "code": "fn main() {\n    println!(\"Hello, World!\");\n}"
-    },
-    {
-      "language": "ruby",
-      "code": "puts 'Hello, World!'"
-    },
-    {
-      "language": "golang",
-      "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}"
-    }
+    { language: "java", extension: "java", code: "public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}" },
+    { language: "c_cpp", extension: "cpp", code: "#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}" },
+    { language: "javascript", extension: "js", code: "console.log('Hello, World!');" },
+    { language: "python", extension: "py", code: "print('Hello, World!')" },
+    { language: "typescript", extension: "ts", code: "console.log('Hello, World!');" },
+    { language: "dart", extension: "dart", code: "void main() {\n  print('Hello, World!');\n}" },
+    { language: "php", extension: "php", code: "<?php\n  echo 'Hello, World!';\n?>" },
+    { language: "rust", extension: "rs", code: "fn main() {\n    println!(\"Hello, World!\");\n}" },
+    { language: "ruby", extension: "rb", code: "puts 'Hello, World!'" },
+    { language: "golang", extension: "go", code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}" }
   ];
-
 
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [code, setCode] = useState('');
@@ -122,6 +91,21 @@ function CodeReview() {
       .catch((e) => console.log(e.message));
   }
 
+  // To handle download the code with extension
+  const handleDownload = () => {
+    const language = languageDB.find(lang => lang.language === selectedLanguage);
+    if (!language) return;
+
+    const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `code.${language.extension}`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+
   return (
     <Fragment>
       <div className="page code_review_page">
@@ -169,6 +153,7 @@ function CodeReview() {
               <button className='btn' onClick={() => handleDebug()}>GenAi</button>
               <button className='btn' onClick={() => handleReview()}>Review</button>
               <button className='btn' onClick={() => handleComment()}>Comment</button>
+              <button className='btn' onClick={() => handleDownload()}>Download</button>
             </div>
           ) : null
         }
