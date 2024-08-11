@@ -25,14 +25,14 @@ function Router() {
                 <Navbar />
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
-                    <Route path='/signup' element={<Signup />} />
-                    <Route path='/signin' element={<Signin />} />
-                    <Route path='/code' element={<CodeNav />} />
-                    <Route path='/code/code-debug' element={<CodeDebug />} />
-                    <Route path='/code/code-comments' element={<CodeComments />} />
-                    <Route path='/code/daily-snippet' element={<DailySnippet />} />
-                    <Route path='/code/code-review' element={<CodeReview />} />
-                    <Route path='/code/project-initialization' element={<ProjectInitialization />} />
+                    <Route path='/signup' element={(!user) ? <Signup /> : <PageNotFound />} />
+                    <Route path='/signin' element={(!user) ? <Signin /> : <PageNotFound />} />
+                    <Route path='/code' element={(user && user.uname) ? <CodeNav /> : <PageNotFound />} />
+                    <Route path='/code/code-debug' element={(user && user.uname) ? <CodeDebug /> : <PageNotFound />} />
+                    <Route path='/code/code-comments' element={(user && user.uname) ? <CodeComments /> : <PageNotFound />} />
+                    <Route path='/code/daily-snippet' element={(user && user.uname) ? <DailySnippet /> : <PageNotFound />} />
+                    <Route path='/code/code-review' element={(user && user.uname) ? <CodeReview /> : <PageNotFound />} />
+                    <Route path='/code/project-initialization' element={(user && user.uname) ? <ProjectInitialization /> : <PageNotFound />} />
                     <Route path='*' element={<PageNotFound />} />
                 </Routes>
                 <Outlet />

@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
 import validator from 'validator';
@@ -14,6 +14,7 @@ function Signin() {
   }
 
   const [formDetails, setFormDetails] = useState(initialState);
+  const nav = useNavigate();
 
   const {
     user,
@@ -51,6 +52,7 @@ function Signin() {
         setUser({ ...userDetails, token });
         localStorage.setItem("code-mini-auth", token);
         alert("User login successfull");
+        nav('/');
         setFormDetails(initialState);
       })
       .catch((e) => {
@@ -70,6 +72,8 @@ function Signin() {
           setUser({ ...user, token });
           localStorage.setItem("code-mini-auth", token);
           alert("User login successfull");
+          nav('/');
+          setFormDetails(initialState);
         })
         .catch(e => {
           console.log(e.message);
