@@ -30,6 +30,15 @@ body {
   padding: 2rem 0rem;
 }
 
+.buttons {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .btn {
   display: flex;
   justify-content: center;
@@ -54,6 +63,16 @@ body {
   border: none;
   color: var(--text);
   background-color: var(--primary);
+}
+
+@media screen and (max-width: 800px) {
+  .buttons {
+    gap: 15px;
+  }
+  
+  .buttons .btn {
+    margin: 0;
+  }
 }
 
 h1,
