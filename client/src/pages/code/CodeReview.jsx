@@ -139,10 +139,10 @@ function CodeReview() {
             (selectedLanguage && code) ? (
               <Fragment>
                 <div className="actions">
-                  <button className='actions_btn' onClick={(e) => handleDownload(e)}>
+                  <button className='actions_btn' onClick={(e) => handleDownload(e)} title='download'>
                     <FaDownload className='fa' />
                   </button>
-                  <button className='actions_btn' onClick={(e) => handleCopy(e)}>
+                  <button className='actions_btn' onClick={(e) => handleCopy(e)} title='copy'>
                     <FaCopy className='fa' />
                   </button>
                 </div>
@@ -175,10 +175,10 @@ function CodeReview() {
         {
           (selectedLanguage && code) ? (
             <div className="buttons">
-              <button className='btn' onClick={() => handleExecute()}>Execute</button>
-              <button className='btn' onClick={() => handleDebug()}>GenAi</button>
-              <button className='btn' onClick={() => handleReview()}>Review</button>
-              <button className='btn' onClick={() => handleComment()}>Comment</button>
+              <button className='btn' title = 'execute' onClick={() => handleExecute()}>Execute</button>
+              <button className='btn' title = 'genai' onClick={() => handleDebug()}>GenAi</button>
+              <button className='btn' title = 'review' onClick={() => handleReview()}>Review</button>
+              <button className='btn' title = 'comment' onClick={() => handleComment()}>Comment</button>
             </div>
           ) : null
         }
